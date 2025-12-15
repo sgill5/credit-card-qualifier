@@ -36,8 +36,11 @@ function updateUserInfo() {
     document.getElementById('statIncome').textContent = '$' + currentUser.annualIncome.toLocaleString();
     
     const userApplications = db.getUserApplications(currentUser.id);
+    const cardViewCount = db.getCardViewCount(currentUser.id);
+    
     document.getElementById('statApps').textContent = userApplications.length;
     document.getElementById('profileApps').textContent = userApplications.length;
+    document.getElementById('profileViews').textContent = cardViewCount;
 }
 
 function loadApplications() {
