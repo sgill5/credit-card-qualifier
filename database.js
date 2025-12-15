@@ -8,7 +8,6 @@ class SimpleDB {
             this.createDemoUser();
         }
         
-        //Credit card data had to sadly get it manually
         this.creditCards = [
             {
                 id: 1,
@@ -58,7 +57,6 @@ class SimpleDB {
                 creditRequired: 660,
                 incomeRequired: 25000
             },
-        
             {
                 id: 5,
                 name: "Amex Platinum",
@@ -107,7 +105,6 @@ class SimpleDB {
                 creditRequired: 660,
                 incomeRequired: 25000
             },
-        
             {
                 id: 9,
                 name: "Capital One Venture X",
@@ -156,7 +153,6 @@ class SimpleDB {
                 creditRequired: 670,
                 incomeRequired: 25000
             },
-        
             {
                 id: 13,
                 name: "Citi Double Cash",
@@ -193,7 +189,6 @@ class SimpleDB {
                 creditRequired: 690,
                 incomeRequired: 35000
             },
-        
             {
                 id: 16,
                 name: "Discover it Cash Back",
@@ -218,7 +213,6 @@ class SimpleDB {
                 creditRequired: 600,
                 incomeRequired: 0
             },
-        
             {
                 id: 18,
                 name: "Wells Fargo Active Cash",
@@ -236,185 +230,171 @@ class SimpleDB {
                 name: "Wells Fargo Autograph",
                 issuer: "Wells Fargo",
                 type: "travel",
-                annualFee: 0,
-                welcomeBonus: "30,000 points",
-                rewards: "3x travel, dining, gas",
-                apr: "20.24%-29.99%",
-                creditRequired: 670,
+                annualFee: 95,
+                welcomeBonus: "50,000 points",
+                rewards: "3x dining, travel, transit",
+                apr: "21.24%-28.74%",
+                creditRequired: 680,
                 incomeRequired: 30000
             },
-        
             {
                 id: 20,
-                name: "Bank of America Customized Cash",
-                issuer: "Bank of America",
+                name: "Wells Fargo Propel",
+                issuer: "Wells Fargo",
                 type: "cashback",
                 annualFee: 0,
-                welcomeBonus: "$200 cash rewards",
-                rewards: "3% category of choice",
-                apr: "18.74%-28.74%",
+                welcomeBonus: "$200 cash",
+                rewards: "3% gas, transit, streaming",
+                apr: "20.24%-29.99%",
                 creditRequired: 670,
                 incomeRequired: 25000
             },
             {
                 id: 21,
+                name: "Barclays Uber",
+                issuer: "Barclays",
+                type: "cashback",
+                annualFee: 0,
+                welcomeBonus: "$100 bonus",
+                rewards: "4% dining, 3% travel",
+                apr: "19.99%-29.99%",
+                creditRequired: 680,
+                incomeRequired: 30000
+            },
+            {
+                id: 22,
+                name: "Barclays Arrival Plus",
+                issuer: "Barclays",
+                type: "travel",
+                annualFee: 95,
+                welcomeBonus: "60,000 miles",
+                rewards: "2x travel, 1x all",
+                apr: "20.99%-29.99%",
+                creditRequired: 680,
+                incomeRequired: 35000
+            },
+            {
+                id: 23,
+                name: "Barclays CashForward",
+                issuer: "Barclays",
+                type: "cashback",
+                annualFee: 0,
+                welcomeBonus: "$200 cash",
+                rewards: "1.5% on all purchases",
+                apr: "19.99%-29.99%",
+                creditRequired: 650,
+                incomeRequired: 25000
+            },
+            {
+                id: 24,
+                name: "BankAmericard Cash Rewards",
+                issuer: "Bank of America",
+                type: "cashback",
+                annualFee: 0,
+                welcomeBonus: "$100 bonus",
+                rewards: "1% cash",
+                apr: "19.74%-29.74%",
+                creditRequired: 650,
+                incomeRequired: 20000
+            },
+            {
+                id: 25,
                 name: "Bank of America Travel Rewards",
                 issuer: "Bank of America",
                 type: "travel",
                 annualFee: 0,
                 welcomeBonus: "25,000 points",
-                rewards: "1.5x on all purchases",
-                apr: "18.74%-28.74%",
-                creditRequired: 670,
-                incomeRequired: 25000
-            },
-        
-            {
-                id: 22,
-                name: "Capital One Platinum",
-                issuer: "Capital One",
-                type: "starter",
-                annualFee: 0,
-                welcomeBonus: "None",
-                rewards: "No rewards",
-                apr: "26.99%",
-                creditRequired: 580,
-                incomeRequired: 0
+                rewards: "1.5x travel",
+                apr: "19.74%-29.74%",
+                creditRequired: 650,
+                incomeRequired: 20000
             },
             {
-                id: 23,
-                name: "Discover it Secured",
-                issuer: "Discover",
-                type: "secured",
-                annualFee: 0,
-                welcomeBonus: "Cashback Match",
-                rewards: "2% gas & restaurants",
-                apr: "24.99%",
-                creditRequired: 550,
-                incomeRequired: 0
-            },
-            {
-                id: 24,
-                name: "Chase Ink Business Cash",
-                issuer: "Chase",
-                type: "business",
-                annualFee: 0,
-                welcomeBonus: "$750 cash back",
-                rewards: "5% office supply, internet",
-                apr: "21.49%-26.49%",
-                creditRequired: 700,
-                incomeRequired: 40000
-            },
-            {
-                id: 25,
+                id: 26,
                 name: "Chase Ink Business Preferred",
                 issuer: "Chase",
                 type: "business",
                 annualFee: 95,
                 welcomeBonus: "100,000 points",
-                rewards: "3x travel, shipping, ads",
-                apr: "21.49%-26.49%",
-                creditRequired: 720,
-                incomeRequired: 50000
-            },
-            {
-                id: 26,
-                name: "Amex Business Gold",
-                issuer: "American Express",
-                type: "business",
-                annualFee: 375,
-                welcomeBonus: "70,000 points",
-                rewards: "4x top business categories",
-                apr: "See agreement",
-                creditRequired: 720,
-                incomeRequired: 60000
+                rewards: "3x on categories",
+                apr: "23.99%-29.99%",
+                creditRequired: 700,
+                incomeRequired: 40000
             },
             {
                 id: 27,
-                name: "Amex Blue Business Plus",
-                issuer: "American Express",
+                name: "Chase Ink Unlimited",
+                issuer: "Chase",
                 type: "business",
                 annualFee: 0,
-                welcomeBonus: "15,000 points",
-                rewards: "2x on all purchases",
-                apr: "See agreement",
-                creditRequired: 690,
-                incomeRequired: 35000
+                welcomeBonus: "$500 cash",
+                rewards: "1.5% all purchases",
+                apr: "21.99%-29.99%",
+                creditRequired: 680,
+                incomeRequired: 30000
             },
             {
                 id: 28,
-                name: "Capital One Spark Cash Plus",
-                issuer: "Capital One",
+                name: "American Express Business Gold",
+                issuer: "American Express",
                 type: "business",
-                annualFee: 150,
-                welcomeBonus: "$1,000 cash back",
-                rewards: "2% on all purchases",
-                apr: "N/A (charge card)",
-                creditRequired: 720,
-                incomeRequired: 60000
-            },
-            {
-                id: 29,
-                name: "Capital One Spark Miles",
-                issuer: "Capital One",
-                type: "business",
-                annualFee: 95,
-                welcomeBonus: "50,000 miles",
-                rewards: "2x on all purchases",
-                apr: "20.99%-28.99%",
+                annualFee: 295,
+                welcomeBonus: "75,000 points",
+                rewards: "4x on categories",
+                apr: "See agreement",
                 creditRequired: 700,
                 incomeRequired: 50000
             },
             {
-                id: 30,
-                name: "Citi Rewards+",
-                issuer: "Citi",
-                type: "travel",
+                id: 29,
+                name: "Capital One Spark Cash Plus",
+                issuer: "Capital One",
+                type: "business",
                 annualFee: 0,
-                welcomeBonus: "20,000 points",
-                rewards: "2x supermarkets & gas",
-                apr: "19.24%-29.24%",
-                creditRequired: 660,
+                welcomeBonus: "$500 bonus",
+                rewards: "2% all purchases",
+                apr: "20.49%-28.49%",
+                creditRequired: 670,
                 incomeRequired: 25000
             },
             {
+                id: 30,
+                name: "Secured Mastercard",
+                issuer: "Capital One",
+                type: "secured",
+                annualFee: 0,
+                welcomeBonus: "None",
+                rewards: "No rewards",
+                apr: "26.99%",
+                creditRequired: 300,
+                incomeRequired: 0
+            },
+            {
                 id: 31,
+                name: "OpenSky Secured Card",
+                issuer: "OpenSky",
+                type: "secured",
+                annualFee: 35,
+                welcomeBonus: "None",
+                rewards: "No rewards",
+                apr: "19.99%-24.99%",
+                creditRequired: 300,
+                incomeRequired: 0
+            },
+            {
+                id: 32,
                 name: "Citi Secured Mastercard",
                 issuer: "Citi",
                 type: "secured",
                 annualFee: 0,
                 welcomeBonus: "None",
                 rewards: "No rewards",
-                apr: "22.49%",
-                creditRequired: 550,
+                apr: "22.99%",
+                creditRequired: 300,
                 incomeRequired: 0
             },
             {
-                id: 32,
-                name: "Wells Fargo Reflect",
-                issuer: "Wells Fargo",
-                type: "low_apr",
-                annualFee: 0,
-                welcomeBonus: "None",
-                rewards: "No rewards",
-                apr: "18.24%-29.99%",
-                creditRequired: 670,
-                incomeRequired: 25000
-            },
-            {
                 id: 33,
-                name: "U.S. Bank Cash+",
-                issuer: "U.S. Bank",
-                type: "cashback",
-                annualFee: 0,
-                welcomeBonus: "$200 cash back",
-                rewards: "5% rotating categories",
-                apr: "19.24%-29.24%",
-                creditRequired: 680,
-                incomeRequired: 30000
-            },
-            {
-                id: 34,
                 name: "U.S. Bank Altitude Go",
                 issuer: "U.S. Bank",
                 type: "travel",
@@ -426,7 +406,7 @@ class SimpleDB {
                 incomeRequired: 30000
             },
             {
-                id: 35,
+                id: 34,
                 name: "U.S. Bank Altitude Reserve",
                 issuer: "U.S. Bank",
                 type: "premium",
@@ -438,7 +418,7 @@ class SimpleDB {
                 incomeRequired: 60000
             },
             {
-                id: 36,
+                id: 35,
                 name: "Apple Card",
                 issuer: "Goldman Sachs",
                 type: "cashback",
@@ -450,7 +430,7 @@ class SimpleDB {
                 incomeRequired: 25000
             },
             {
-                id: 37,
+                id: 36,
                 name: "Amazon Prime Rewards Visa",
                 issuer: "Chase",
                 type: "cashback",
@@ -462,7 +442,7 @@ class SimpleDB {
                 incomeRequired: 30000
             },
             {
-                id: 38,
+                id: 37,
                 name: "PayPal Cashback Mastercard",
                 issuer: "Synchrony",
                 type: "cashback",
@@ -474,7 +454,7 @@ class SimpleDB {
                 incomeRequired: 20000
             },
             {
-                id: 39,
+                id: 38,
                 name: "SoFi Credit Card",
                 issuer: "SoFi",
                 type: "cashback",
@@ -486,7 +466,7 @@ class SimpleDB {
                 incomeRequired: 30000
             },
             {
-                id: 40,
+                id: 39,
                 name: "Petal 2 Visa",
                 issuer: "Petal",
                 type: "starter",
@@ -498,7 +478,7 @@ class SimpleDB {
                 incomeRequired: 0
             },
             {
-                id: 41,
+                id: 40,
                 name: "Petal 1 Visa",
                 issuer: "Petal",
                 type: "starter",
@@ -510,7 +490,7 @@ class SimpleDB {
                 incomeRequired: 0
             },
             {
-                id: 42,
+                id: 41,
                 name: "Deserve EDU Mastercard",
                 issuer: "Deserve",
                 type: "student",
@@ -522,7 +502,7 @@ class SimpleDB {
                 incomeRequired: 0
             },
             {
-                id: 43,
+                id: 42,
                 name: "Capital One Journey",
                 issuer: "Capital One",
                 type: "student",
@@ -534,7 +514,7 @@ class SimpleDB {
                 incomeRequired: 0
             },
             {
-                id: 44,
+                id: 43,
                 name: "Bank of America Unlimited Cash",
                 issuer: "Bank of America",
                 type: "cashback",
@@ -546,7 +526,7 @@ class SimpleDB {
                 incomeRequired: 25000
             },
             {
-                id: 45,
+                id: 44,
                 name: "Bank of America Premium Rewards",
                 issuer: "Bank of America",
                 type: "travel",
@@ -556,17 +536,27 @@ class SimpleDB {
                 apr: "20.24%-28.24%",
                 creditRequired: 700,
                 incomeRequired: 40000
+            },
+            {
+                id: 45,
+                name: "Citi Low APR MasterCard",
+                issuer: "Citi",
+                type: "low_apr",
+                annualFee: 0,
+                welcomeBonus: "0% APR 12 months",
+                rewards: "No rewards",
+                apr: "11.99%-21.99%",
+                creditRequired: 700,
+                incomeRequired: 40000
             }
-
         ];
-        
     }
     
     createDemoUser() {
         const demoUser = {
             id: 1,
             email: "demo@example.com",
-            password: "demo123_hashed", 
+            password: "demo123_hashed",
             firstName: "Demo",
             lastName: "User",
             annualIncome: 75000,
@@ -587,7 +577,7 @@ class SimpleDB {
     }
     
     findUser(email) {
-        return this.users.find(u => u.email === email);
+        return this.users.find(user => user.email === email);
     }
     
     createUser(userData) {
@@ -625,7 +615,7 @@ class SimpleDB {
     }
     
     getUserApplications(userId) {
-        return this.applications.filter(app => app.userId === userId);
+        return this.applications.filter(application => application.userId === userId);
     }
     
     updateUser(userId, updates) {
