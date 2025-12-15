@@ -42,7 +42,24 @@ function displayCards(cards, containerId) {
         
         const odds = calculateApprovalOdds(card);
         const oddsColor = odds > 70 ? '#28a745' : odds > 50 ? '#ffc107' : '#dc3545';
-        const hasApplied = userApplications.some(app => app.cardId === card.id);
+        
+        const latestApplication = userApplications.find(app => app.cardId === card.id);
+        let buttonHTML = '';
+        
+        if (!latestApplication) {
+            buttonHTML = `<button class="btn" style="padding: 8px 15px;" onclick="applyForCard(${card.id})">Apply Now</button>`;
+        } else if (latestApplication.status === 'approved') {
+            buttonHTML = `<button class="btn" style="padding: 8px 15px; opacity: 0.8;" onclick="cancelApplication(${card.id})">✓ Approved - Cancel</button>`;
+        } else if (latestApplication.status === 'declined') {
+            const canReapply = db.canReapply(currentUser.id, card.id);
+            if (canReapply) {
+                buttonHTML = `<button class="btn" style="padding: 8px 15px; background: #ff9800;" onclick="applyForCard(${card.id})">❌ Declined - Apply Again</button>`;
+            } else {
+                const waitHours = db.getReapplyWaitTime(currentUser.id, card.id);
+                const displayHours = waitHours > 0 ? waitHours : 12;
+                buttonHTML = `<button class="btn" style="padding: 8px 15px; background: #ccc; cursor: not-allowed; opacity: 0.6;" disabled>⏳ Try again in ${displayHours}h</button>`;
+            }
+        }
         
         let displayName = card.name;
         if (searchQuery && card.name.toLowerCase().includes(searchQuery)) {
@@ -85,9 +102,7 @@ function displayCards(cards, containerId) {
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button class="btn" style="padding: 8px 15px; ${hasApplied ? 'opacity: 0.6; cursor: not-allowed;' : ''}" onclick="${hasApplied ? '' : `applyForCard(${card.id})`}" ${hasApplied ? 'disabled' : ''}>
-                        ${hasApplied ? '✓ Applied' : 'Apply Now'}
-                    </button>
+                    ${buttonHTML}
                 </div>
             </div>
         `;
@@ -165,23 +180,53 @@ function applyForCard(cardId) {
     const card = db.creditCards.find(c => c.id === cardId);
     if (!card) return;
     
+    const canReapply = db.canReapply(currentUser.id, card.id);
+    if (!canReapply) {
+        const waitHours = db.getReapplyWaitTime(currentUser.id, card.id);
+        showMessage(`Please wait ${waitHours} more hours before reapplying`, 'error');
+        return;
+    }
+    
     const odds = calculateApprovalOdds(card);
     const application = db.createApplication(currentUser.id, cardId, odds);
     
     if (application.status === 'approved') {
-        showMessage(`Approved! You got ${card.name}!`, 'success');
+        showMessage(`✅ Approved! You got ${card.name}!`, 'success');
     } else {
-        showMessage(`Declined for ${card.name}.`, 'error');
+        showMessage(`❌ Declined for ${card.name}. You can try again in 12 hours!`, 'error');
     }
-    
-    const button = event.target;
-    button.disabled = true;
-    button.textContent = 'Applied';
-    button.style.opacity = '0.6';
-    button.style.cursor = 'not-allowed';
     
     updateUserInfo();
     loadDashboardCards();
+    
+    if (document.getElementById('cardsResults')) {
+        findCards();
+    }
+}
+
+function cancelApplication(cardId) {
+    if (!currentUser) return;
+    
+    const card = db.creditCards.find(c => c.id === cardId);
+    if (!card) return;
+    
+    const userApplications = db.getUserApplications(currentUser.id);
+    const applicationToRemove = userApplications.find(app => app.cardId === cardId && app.status === 'approved');
+    
+    if (applicationToRemove) {
+        const index = db.applications.indexOf(applicationToRemove);
+        if (index > -1) {
+            db.applications.splice(index, 1);
+            db.save();
+            showMessage(`Cancelled ${card.name}`, 'success');
+            updateUserInfo();
+            loadDashboardCards();
+            
+            if (document.getElementById('cardsResults')) {
+                findCards();
+            }
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -199,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
 window.findCards = findCards;
 window.resetFilters = resetFilters;
 window.applyForCard = applyForCard;
+window.cancelApplication = cancelApplication;
 window.loadDashboardCards = loadDashboardCards;
 
 function loadRewardsCardDropdown() {
@@ -218,7 +264,7 @@ function loadRewardsCardDropdown() {
 
         if (approvedCards.length > 0) {
             const approvedGroup = document.createElement('optgroup');
-            approvedGroup.label = 'Approved Cards';
+            approvedGroup.label = '✅ Approved Cards';
             approvedCards.forEach(card => {
                 const option = document.createElement('option');
                 option.value = card.id;
