@@ -67,9 +67,7 @@
     
     <div id="appScreen" class="screen hidden">
         <header class="app-header">
-            <div>
-                <h2 style="color: #667eea;">💳 CardQualifier Pro</h2>
-            </div>
+            <div><h2 style="color: #667eea;">💳 CardQualifier Pro</h2></div>
             <nav class="app-nav">
                 <button class="nav-btn active" onclick="showPage('dashboard')">🏠 Dashboard</button>
                 <button class="nav-btn" onclick="showPage('cards')">🔍 Find Cards</button>
@@ -86,7 +84,6 @@
             <div id="dashboardPage" class="page active">
                 <h2>Welcome back, <span id="greetingName">User</span>!</h2>
                 <p>Your personalized credit card recommendations</p>
-                
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">📊</div>
@@ -109,7 +106,6 @@
                         <div class="stat-label">Avg Approval</div>
                     </div>
                 </div>
-                
                 <h3>✨ Top Recommendations</h3>
                 <div id="dashboardCards" class="cards-grid"></div>
             </div>
@@ -117,7 +113,6 @@
             <div id="cardsPage" class="page">
                 <h2>🔍 Find Your Perfect Card</h2>
                 <p>Filter cards and see your approval odds</p>
-                
                 <div class="form-group" style="margin-bottom: 20px; max-width: 500px;">
                     <label>Search Cards</label>
                     <div style="display: flex; gap: 10px;">
@@ -125,7 +120,6 @@
                         <button type="button" class="btn" onclick="findCards()" style="width: auto; padding: 12px 20px;">Search</button>
                     </div>
                 </div>
-                
                 <div class="filter-panel">
                     <div class="form-group">
                         <label>Maximum Annual Fee: $<span id="feeValue">500</span></label>
@@ -148,7 +142,6 @@
                     <button class="btn" onclick="findCards()">Find Matching Cards</button>
                     <button class="btn btn-secondary" onclick="resetFilters()">Reset Filters</button>
                 </div>
-                
                 <h3>Found <span id="resultsCount">0</span> cards</h3>
                 <div id="cardsResults" class="cards-grid"></div>
             </div>
@@ -169,15 +162,13 @@
             <div id="profilePage" class="page">
                 <h2>👤 My Profile</h2>
                 <p>Manage your financial information</p>
-            
                 <div class="profile-grid">
                     <div class="profile-card">
                         <div style="text-align:center; margin-bottom:30px;">
                             <div style="font-size:60px; color:#667eea;">👤</div>
                             <h3 id="profileName">User</h3>
-                            <p id="profileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="680d05090104280d10090518040d460b0705">[email&#160;protected]</a></p>
+                            <p id="profileEmail">email@example.com</p>
                         </div>
-            
                         <form onsubmit="updateProfile(event)">
                             <div class="form-group">
                                 <label>Annual Income ($)</label>
@@ -189,46 +180,37 @@
                             </div>
                             <button type="submit" class="btn">Update Profile</button>
                         </form>
-            
                         <div class="profile-stats">
                             <strong>Applications:</strong> <span id="profileApps">0</span><br>
                             <strong>Cards Viewed:</strong> <span id="profileViews">0</span>
                         </div>
                     </div>
-            
                     <div class="profile-card">
                         <h3>💰 Rewards Calculator</h3>
                         <p style="color:#666; margin-bottom:20px;">Select a card and estimate your yearly rewards</p>
-            
                         <div class="form-group">
                             <label>Select Card</label>
                             <select id="rewardsCardSelect" class="form-control">
                                 <option value="">Select a card</option>
                             </select>
                         </div>
-            
                         <div class="form-group">
                             <label>Monthly Dining ($)</label>
                             <input type="number" id="spendDining" min="0">
                         </div>
-            
                         <div class="form-group">
                             <label>Monthly Groceries ($)</label>
                             <input type="number" id="spendGroceries" min="0">
                         </div>
-            
                         <div class="form-group">
                             <label>Monthly Travel ($)</label>
                             <input type="number" id="spendTravel" min="0">
                         </div>
-            
                         <div class="form-group">
                             <label>Other Monthly Spending ($)</label>
                             <input type="number" id="spendOther" min="0">
                         </div>
-            
                         <button class="btn" onclick="calculateRewards()">Calculate Rewards</button>
-            
                         <div id="rewardsResult" style="margin-top:20px;"></div>
                     </div>
                 </div>
@@ -236,4 +218,9 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <script src="cards.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
