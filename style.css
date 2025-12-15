@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     min-height: 100vh;
     position: relative;
     color: #333;
@@ -20,9 +20,9 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 50%, rgba(100, 200, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 150, 150, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 0%, rgba(150, 255, 200, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(88, 126, 234, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(248, 113, 113, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 0%, rgba(52, 211, 153, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
 }
@@ -156,7 +156,7 @@ body::before {
 }
 
 .app-screen {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
 }
 
 .app-header {
@@ -202,24 +202,24 @@ body::before {
 
 .app-content {
     padding: 30px 20px;
-    color: #333;
+    color: white;
 }
 
 .app-content h2 {
-    color: #1a1a1a;
+    color: white;
     font-size: 28px;
     margin-bottom: 8px;
 }
 
 .app-content h3 {
-    color: #1a1a1a;
+    color: white;
     font-size: 20px;
     margin-top: 25px;
     margin-bottom: 15px;
 }
 
 .app-content p {
-    color: #555;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 20px;
 }
 
