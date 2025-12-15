@@ -107,8 +107,7 @@
                 </div>
                 
                 <h3>✨ Top Recommendations</h3>
-                <div id="dashboardCards" class="cards-grid">
-                </div>
+                <div id="dashboardCards" class="cards-grid"></div>
             </div>
             
             <div id="cardsPage" class="page">
@@ -147,8 +146,7 @@
                 </div>
                 
                 <h3>Found <span id="resultsCount">0</span> cards</h3>
-                <div id="cardsResults" class="cards-grid">
-                </div>
+                <div id="cardsResults" class="cards-grid"></div>
             </div>
             
             <div id="applicationsPage" class="page">
@@ -173,7 +171,7 @@
                         <div style="text-align:center; margin-bottom:30px;">
                             <div style="font-size:60px; color:#667eea;">👤</div>
                             <h3 id="profileName">User</h3>
-                            <p id="profileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4f2a222e26230f2a372e223f232a612c2022">[email&#160;protected]</a></p>
+                            <p id="profileEmail">email@example.com</p>
                         </div>
             
                         <form onsubmit="updateProfile(event)">
@@ -196,9 +194,7 @@
             
                     <div class="profile-card">
                         <h3>💰 Rewards Calculator</h3>
-                        <p style="color:#666; margin-bottom:20px;">
-                            Select a card and estimate your yearly rewards
-                        </p>
+                        <p style="color:#666; margin-bottom:20px;">Select a card and estimate your yearly rewards</p>
             
                         <div class="form-group">
                             <label>Select Card</label>
@@ -236,4 +232,9 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <script src="cards.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
