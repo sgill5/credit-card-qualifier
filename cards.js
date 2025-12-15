@@ -36,6 +36,10 @@ function displayCards(cards, containerId) {
     const userApplications = currentUser ? db.getUserApplications(currentUser.id) : [];
     
     container.innerHTML = cards.map(card => {
+        if (currentUser) {
+            db.trackCardView(currentUser.id, card.id);
+        }
+        
         const odds = calculateApprovalOdds(card);
         const oddsColor = odds > 70 ? '#28a745' : odds > 50 ? '#ffc107' : '#dc3545';
         const hasApplied = userApplications.some(app => app.cardId === card.id);
@@ -165,9 +169,9 @@ function applyForCard(cardId) {
     const application = db.createApplication(currentUser.id, cardId, odds);
     
     if (application.status === 'approved') {
-        showMessage(`✅ Approved! You got ${card.name}!`, 'success');
+        showMessage(`Approved! You got ${card.name}!`, 'success');
     } else {
-        showMessage(`❌ Declined for ${card.name}.`, 'error');
+        showMessage(`Declined for ${card.name}.`, 'error');
     }
     
     const button = event.target;
@@ -203,12 +207,44 @@ function loadRewardsCardDropdown() {
 
     select.innerHTML = '<option value="">Select a card</option>';
 
-    db.creditCards.forEach(card => {
-        const option = document.createElement('option');
-        option.value = card.id;
-        option.textContent = `${card.name} (${card.issuer})`;
-        select.appendChild(option);
-    });
+    if (currentUser) {
+        const userApplications = db.getUserApplications(currentUser.id);
+        const approvedCardIds = userApplications
+            .filter(app => app.status === 'approved')
+            .map(app => app.cardId);
+
+        const approvedCards = db.creditCards.filter(card => approvedCardIds.includes(card.id));
+        const otherCards = db.creditCards.filter(card => !approvedCardIds.includes(card.id));
+
+        if (approvedCards.length > 0) {
+            const approvedGroup = document.createElement('optgroup');
+            approvedGroup.label = 'Approved Cards';
+            approvedCards.forEach(card => {
+                const option = document.createElement('option');
+                option.value = card.id;
+                option.textContent = `${card.name} (${card.issuer})`;
+                approvedGroup.appendChild(option);
+            });
+            select.appendChild(approvedGroup);
+        }
+
+        const otherGroup = document.createElement('optgroup');
+        otherGroup.label = 'All Cards';
+        otherCards.forEach(card => {
+            const option = document.createElement('option');
+            option.value = card.id;
+            option.textContent = `${card.name} (${card.issuer})`;
+            otherGroup.appendChild(option);
+        });
+        select.appendChild(otherGroup);
+    } else {
+        db.creditCards.forEach(card => {
+            const option = document.createElement('option');
+            option.value = card.id;
+            option.textContent = `${card.name} (${card.issuer})`;
+            select.appendChild(option);
+        });
+    }
 }
 
 function calculateRewards() {
@@ -252,8 +288,3 @@ function calculateRewards() {
         </div>
     `;
 }
-
-window.findCards = findCards;
-window.resetFilters = resetFilters;
-window.applyForCard = applyForCard;
-window.loadDashboardCards = loadDashboardCards;
