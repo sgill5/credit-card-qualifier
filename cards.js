@@ -196,6 +196,17 @@ function applyForCard(cardId) {
         return;
     }
     
+    const userApplications = db.getUserApplications(currentUser.id);
+    const oldDeclinedApplication = userApplications.find(app => app.cardId === cardId && app.status === 'declined');
+    
+    if (oldDeclinedApplication) {
+        const index = db.applications.indexOf(oldDeclinedApplication);
+        if (index > -1) {
+            db.applications.splice(index, 1);
+            db.save();
+        }
+    }
+    
     const odds = calculateApprovalOdds(card);
     const application = db.createApplication(currentUser.id, cardId, odds);
     
@@ -207,6 +218,7 @@ function applyForCard(cardId) {
     
     updateUserInfo();
     loadDashboardCards();
+    loadApplications();
     
     if (document.getElementById('cardsResults')) {
         findCards();
