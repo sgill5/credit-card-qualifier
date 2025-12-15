@@ -119,9 +119,18 @@ function loadDashboardCards() {
     
     displayCards(sortedCards, 'dashboardCards');
     
-    if (sortedCards.length > 0) {
-        const average = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
-        document.getElementById('statOdds').textContent = average + '%';
+    if (currentUser) {
+        const userApplications = db.getUserApplications(currentUser.id);
+        if (userApplications.length > 0) {
+            const approvedCount = userApplications.filter(app => app.status === 'approved').length;
+            const approvalRate = Math.round((approvedCount / userApplications.length) * 100);
+            document.getElementById('statOdds').textContent = approvalRate + '%';
+        } else {
+            if (sortedCards.length > 0) {
+                const avg = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
+                document.getElementById('statOdds').textContent = avg + '%';
+            }
+        }
     }
 }
 
