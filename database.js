@@ -605,6 +605,31 @@ class SimpleDB {
         this.save();
         return application;
     }
+
+    canReapply(userId, cardId) {
+        const applications = this.applications.filter(app => app.userId === userId && app.cardId === cardId);
+        if (applications.length === 0) return true;
+        
+        const lastApplication = applications[applications.length - 1];
+        const lastApplicationTime = new Date(lastApplication.date);
+        const now = new Date();
+        const hoursDifference = (now - lastApplicationTime) / (1000 * 60 * 60);
+        
+        return hoursDifference >= 12;
+    }
+
+    getReapplyWaitTime(userId, cardId) {
+        const applications = this.applications.filter(app => app.userId === userId && app.cardId === cardId);
+        if (applications.length === 0) return 0;
+        
+        const lastApplication = applications[applications.length - 1];
+        const lastApplicationTime = new Date(lastApplication.date);
+        const now = new Date();
+        const hoursDifference = (now - lastApplicationTime) / (1000 * 60 * 60);
+        
+        if (hoursDifference >= 12) return 0;
+        return Math.ceil(12 - hoursDifference);
+    }
     
     determineApprovalStatus(approvalOdds) {
         const random = Math.random() * 100;
