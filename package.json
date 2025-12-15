@@ -1,0 +1,13 @@
+{
+    "name": "credit-card-qualifier-pro",
+    "version": "1.0.0",
+    "description": "Advanced credit card matching application with Firebase authentication",
+    "main": "index.html",
+    "scripts": {
+      "start": "python -m http.server 3000"
+    },
+    "keywords": ["credit-card", "finance", "webapp"],
+    "author": "",
+    "license": "MIT",
+    "private": true
+  }
