@@ -3,11 +3,11 @@ function calculateApprovalOdds(card) {
     
     let score = 50;
     
-    const creditDiff = currentUser.creditScore - card.creditRequired;
-    if (creditDiff >= 100) score += 30;
-    else if (creditDiff >= 50) score += 20;
-    else if (creditDiff >= 0) score += 15;
-    else if (creditDiff >= -50) score += 5;
+    const creditDifference = currentUser.creditScore - card.creditRequired;
+    if (creditDifference >= 100) score += 30;
+    else if (creditDifference >= 50) score += 20;
+    else if (creditDifference >= 0) score += 15;
+    else if (creditDifference >= -50) score += 5;
     else score -= 20;
     
     const incomeRatio = currentUser.annualIncome / card.incomeRequired;
@@ -28,7 +28,7 @@ function calculateApprovalOdds(card) {
 function displayCards(cards, containerId) {
     const container = document.getElementById(containerId);
     if (!cards || cards.length === 0) {
-        container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No cards found matching your search</div>';
+        container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No cards found</div>';
         return;
     }
     
@@ -101,8 +101,8 @@ function loadDashboardCards() {
     displayCards(sortedCards, 'dashboardCards');
     
     if (sortedCards.length > 0) {
-        const avg = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
-        document.getElementById('statOdds').textContent = avg + '%';
+        const average = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
+        document.getElementById('statOdds').textContent = average + '%';
     }
 }
 
@@ -118,7 +118,6 @@ function findCards() {
     
     let filteredCards = db.creditCards.filter(card => {
         if (card.annualFee > maxFee) return false;
-        
         if (cardType && card.type !== cardType) return false;
         
         if (searchQuery) {
@@ -129,10 +128,7 @@ function findCards() {
                 card.type.toLowerCase()
             ];
             
-            const matchesSearch = searchFields.some(field => 
-                field.includes(searchQuery)
-            );
-            
+            const matchesSearch = searchFields.some(field => field.includes(searchQuery));
             if (!matchesSearch) return false;
         }
         
@@ -166,12 +162,12 @@ function applyForCard(cardId) {
     if (!card) return;
     
     const odds = calculateApprovalOdds(card);
-    const app = db.createApplication(currentUser.id, cardId, odds);
+    const application = db.createApplication(currentUser.id, cardId, odds);
     
-    if (app.status === 'approved') {
-        showMessage(`✅ Approved! You've been approved for ${card.name}!`, 'success');
+    if (application.status === 'approved') {
+        showMessage(`✅ Approved! You got ${card.name}!`, 'success');
     } else {
-        showMessage(`❌ Declined. Application for ${card.name} was declined.`, 'error');
+        showMessage(`❌ Declined for ${card.name}.`, 'error');
     }
     
     const button = event.target;
@@ -195,6 +191,67 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+window.findCards = findCards;
+window.resetFilters = resetFilters;
+window.applyForCard = applyForCard;
+window.loadDashboardCards = loadDashboardCards;
+
+function loadRewardsCardDropdown() {
+    const select = document.getElementById('rewardsCardSelect');
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Select a card</option>';
+
+    db.creditCards.forEach(card => {
+        const option = document.createElement('option');
+        option.value = card.id;
+        option.textContent = `${card.name} (${card.issuer})`;
+        select.appendChild(option);
+    });
+}
+
+function calculateRewards() {
+    const cardId = parseInt(document.getElementById('rewardsCardSelect').value);
+    if (!cardId) {
+        showMessage('Please select a card', 'error');
+        return;
+    }
+
+    const card = db.creditCards.find(c => c.id === cardId);
+    if (!card) return;
+
+    const diningSpend = +document.getElementById('spendDining').value || 0;
+    const grocerySpend = +document.getElementById('spendGroceries').value || 0;
+    const travelSpend = +document.getElementById('spendTravel').value || 0;
+    const otherSpend = +document.getElementById('spendOther').value || 0;
+
+    let diningRate = card.type === 'travel' ? 0.03 : 0.02;
+    let travelRate = card.type === 'travel' ? 0.03 : 0.02;
+
+    const annualRewards =
+        diningSpend * 12 * diningRate +
+        grocerySpend * 12 * 0.03 +
+        travelSpend * 12 * travelRate +
+        otherSpend * 12 * 0.01;
+
+    const netValue = annualRewards - card.annualFee;
+
+    document.getElementById('rewardsResult').innerHTML = `
+        <strong>${card.name}</strong><br><br>
+        Estimated Annual Rewards:
+        <div style="font-size:24px; color:#28a745;">
+            $${Math.round(annualRewards)}
+        </div>
+        <div style="margin-top:10px; color:#555;">
+            Annual Fee: $${card.annualFee}<br>
+            <strong>Net Value:</strong>
+            <span style="color:${netValue >= 0 ? '#28a745' : '#dc3545'};">
+                $${Math.round(netValue)}
+            </span>
+        </div>
+    `;
+}
 
 window.findCards = findCards;
 window.resetFilters = resetFilters;
