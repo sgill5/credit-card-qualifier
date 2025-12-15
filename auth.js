@@ -70,6 +70,10 @@ async function handleSignup(event) {
     const annualIncome = document.getElementById('signupIncome').value;
     const creditScore = document.getElementById('signupCreditScore').value;
     
+    document.querySelectorAll('.form-input-signup').forEach(field => {
+        field.classList.remove('error');
+    });
+    
     const emptyFields = [];
     
     if (!firstName) emptyFields.push('signupFirstName');
@@ -88,11 +92,13 @@ async function handleSignup(event) {
         return;
     }
     
-    document.querySelectorAll('.form-input-signup').forEach(field => {
-        field.classList.remove('error');
-    });
+    if (password.length < 6) {
+        document.getElementById('signupPassword').classList.add('error');
+        showMessage('Password must be at least 6 characters', 'error');
+        return;
+    }
     
-    const birthDate = new Date(dob);
+    const birthDate = new Date(dob + 'T00:00:00');
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -103,12 +109,6 @@ async function handleSignup(event) {
     if (age < 18) {
         document.getElementById('signupDOB').classList.add('error');
         showMessage('You must be at least 18 years old to sign up', 'error');
-        return;
-    }
-    
-    if (password.length < 6) {
-        document.getElementById('signupPassword').classList.add('error');
-        showMessage('Password must be at least 6 characters', 'error');
         return;
     }
     
