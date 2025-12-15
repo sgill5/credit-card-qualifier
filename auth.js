@@ -3,11 +3,14 @@ let currentUser = null;
 function switchTab(tab) {
     const allTabs = document.querySelectorAll('.auth-tab');
     allTabs.forEach(t => t.classList.remove('active'));
-    allTabs.forEach(t => {
-        if (t.textContent.toLowerCase().includes(tab)) {
-            t.classList.add('active');
-        }
+    
+    const clickedTab = Array.from(allTabs).find(t => {
+        return t.getAttribute('onclick').includes("'" + tab + "'");
     });
+    
+    if (clickedTab) {
+        clickedTab.classList.add('active');
+    }
     
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
