@@ -218,6 +218,19 @@ function reapplyFromList(cardId) {
         return;
     }
     
+    const userApplications = db.getUserApplications(currentUser.id);
+    const allPreviousApplications = userApplications.filter(app => app.cardId === cardId);
+    
+    if (allPreviousApplications.length > 0) {
+        allPreviousApplications.forEach(oldApp => {
+            const index = db.applications.indexOf(oldApp);
+            if (index > -1) {
+                db.applications.splice(index, 1);
+            }
+        });
+        db.save();
+    }
+    
     const odds = calculateApprovalOdds(card);
     const application = db.createApplication(currentUser.id, cardId, odds);
     
