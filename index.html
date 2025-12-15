@@ -173,7 +173,7 @@
                         <div style="text-align:center; margin-bottom:30px;">
                             <div style="font-size:60px; color:#667eea;">👤</div>
                             <h3 id="profileName">User</h3>
-                            <p id="profileEmail">email@example.com</p>
+                            <p id="profileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4f2a222e26230f2a372e223f232a612c2022">[email&#160;protected]</a></p>
                         </div>
             
                         <form onsubmit="updateProfile(event)">
@@ -209,22 +209,22 @@
             
                         <div class="form-group">
                             <label>Monthly Dining ($)</label>
-                            <input type="number" id="spendDining" value="300">
+                            <input type="number" id="spendDining" min="0">
                         </div>
             
                         <div class="form-group">
                             <label>Monthly Groceries ($)</label>
-                            <input type="number" id="spendGroceries" value="400">
+                            <input type="number" id="spendGroceries" min="0">
                         </div>
             
                         <div class="form-group">
                             <label>Monthly Travel ($)</label>
-                            <input type="number" id="spendTravel" value="200">
+                            <input type="number" id="spendTravel" min="0">
                         </div>
             
                         <div class="form-group">
                             <label>Other Monthly Spending ($)</label>
-                            <input type="number" id="spendOther" value="500">
+                            <input type="number" id="spendOther" min="0">
                         </div>
             
                         <button class="btn" onclick="calculateRewards()">Calculate Rewards</button>
@@ -236,9 +236,4 @@
         </div>
     </div>
 
-    <script src="database.js"></script>
-    <script src="auth.js"></script>
-    <script src="cards.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    <script data-cfasync="false" src="/cdn-cgi/
