@@ -249,7 +249,3 @@ window.addEventListener('load', () => {
     window.cancelApplicationFromList = cancelApplicationFromList;
     window.reapplyFromList = reapplyFromList;
 });
-    
-    window.showPage = showPage;
-    window.updateProfile = updateProfile;
-});
