@@ -27,6 +27,12 @@ function showMessage(text, type = 'info') {
 
 async function handleLogin(event) {
     event.preventDefault();
+    
+    if (!auth) {
+        showMessage('Firebase is still loading. Please wait a moment and try again.', 'error');
+        return;
+    }
+    
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     
@@ -53,6 +59,11 @@ async function handleLogin(event) {
 
 async function handleSignup(event) {
     event.preventDefault();
+    
+    if (!auth) {
+        showMessage('Firebase is still loading. Please wait a moment and try again.', 'error');
+        return;
+    }
     
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
@@ -96,6 +107,7 @@ async function handleSignup(event) {
         
         showMessage('Account created! Check your email to verify your account.', 'success');
         
+        // Show verification screen
         document.getElementById('signupForm').style.display = 'none';
         document.getElementById('verifyForm').style.display = 'block';
         document.getElementById('verifyEmail').textContent = email;
@@ -168,19 +180,26 @@ function loadUserData(firebaseUser) {
     }
 }
 
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        if (user.emailVerified) {
-            loadUserData(user);
-            showApp();
-        } else {
-            showAuth();
-            showMessage('Please verify your email to access your account', 'error');
+
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if (auth) {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    if (user.emailVerified) {
+                        loadUserData(user);
+                        showApp();
+                    } else {
+                        showAuth();
+                        showMessage('Please verify your email to access your account', 'error');
+                    }
+                } else {
+                    currentUser = null;
+                    showAuth();
+                }
+            });
         }
-    } else {
-        currentUser = null;
-        showAuth();
-    }
+    }, 500);
 });
 
 function getErrorMessage(error) {
