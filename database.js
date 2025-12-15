@@ -3,6 +3,7 @@ class SimpleDB {
         this.users = JSON.parse(localStorage.getItem('cc_users')) || [];
         this.applications = JSON.parse(localStorage.getItem('cc_applications')) || [];
         this.sessions = JSON.parse(localStorage.getItem('cc_sessions')) || [];
+        this.cardViews = JSON.parse(localStorage.getItem('cc_cardviews')) || [];
         
         if (this.users.length === 0) {
             this.createDemoUser();
@@ -617,6 +618,22 @@ class SimpleDB {
     getUserApplications(userId) {
         return this.applications.filter(application => application.userId === userId);
     }
+
+    trackCardView(userId, cardId) {
+        const existingView = this.cardViews.find(v => v.userId === userId && v.cardId === cardId);
+        if (!existingView) {
+            this.cardViews.push({
+                userId,
+                cardId,
+                viewedAt: new Date().toISOString()
+            });
+            this.save();
+        }
+    }
+
+    getCardViewCount(userId) {
+        return this.cardViews.filter(v => v.userId === userId).length;
+    }
     
     updateUser(userId, updates) {
         const user = this.users.find(u => u.id === userId);
@@ -632,6 +649,7 @@ class SimpleDB {
         localStorage.setItem('cc_users', JSON.stringify(this.users));
         localStorage.setItem('cc_applications', JSON.stringify(this.applications));
         localStorage.setItem('cc_sessions', JSON.stringify(this.sessions));
+        localStorage.setItem('cc_cardviews', JSON.stringify(this.cardViews));
     }
 }
 
