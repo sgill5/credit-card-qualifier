@@ -99,6 +99,13 @@ async function handleSignup(event) {
     }
     
     const birthDate = new Date(dob + 'T00:00:00');
+    
+    if (isNaN(birthDate.getTime())) {
+        document.getElementById('signupDOB').classList.add('error');
+        showMessage('Please enter a valid date', 'error');
+        return;
+    }
+    
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
