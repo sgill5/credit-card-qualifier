@@ -33,28 +33,32 @@
             
             <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
                 <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" id="signupFirstName" required>
+                    <label>First Name <span style="color: #dc3545;">*</span></label>
+                    <input type="text" id="signupFirstName" class="form-input-signup" required>
                 </div>
                 <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" id="signupLastName" required>
+                    <label>Last Name <span style="color: #dc3545;">*</span></label>
+                    <input type="text" id="signupLastName" class="form-input-signup" required>
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" required>
+                    <label>Email <span style="color: #dc3545;">*</span></label>
+                    <input type="email" id="signupEmail" class="form-input-signup" required>
                 </div>
                 <div class="form-group">
-                    <label>Password (min 6 characters)</label>
-                    <input type="password" id="signupPassword" required>
+                    <label>Date of Birth <span style="color: #dc3545;">*</span></label>
+                    <input type="date" id="signupDOB" class="form-input-signup" required>
                 </div>
                 <div class="form-group">
-                    <label>Annual Income ($)</label>
-                    <input type="number" id="signupIncome" value="50000" required>
+                    <label>Password (min 6 characters) <span style="color: #dc3545;">*</span></label>
+                    <input type="password" id="signupPassword" class="form-input-signup" required>
                 </div>
                 <div class="form-group">
-                    <label>Credit Score (300-850)</label>
-                    <input type="number" id="signupCreditScore" value="700" min="300" max="850" required>
+                    <label>Annual Income ($) <span style="color: #dc3545;">*</span></label>
+                    <input type="number" id="signupIncome" class="form-input-signup" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Credit Score (300-850) <span style="color: #dc3545;">*</span></label>
+                    <input type="number" id="signupCreditScore" class="form-input-signup" min="300" max="850" required>
                 </div>
                 <button type="submit" class="btn">Create Account</button>
             </form>
@@ -171,7 +175,7 @@
                         <div style="text-align:center; margin-bottom:30px;">
                             <div style="font-size:60px; color:#667eea;">👤</div>
                             <h3 id="profileName">User</h3>
-                            <p id="profileEmail">email@example.com</p>
+                            <p id="profileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="680d05090104280d10090518040d460b0705">[email&#160;protected]</a></p>
                         </div>
             
                         <form onsubmit="updateProfile(event)">
@@ -232,9 +236,4 @@
         </div>
     </div>
 
-    <script src="database.js"></script>
-    <script src="auth.js"></script>
-    <script src="cards.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    <script data-cfasync="false" src="/cdn-cgi/
