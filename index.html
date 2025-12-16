@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credit Card Qualifier Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="authScreen" class="screen active">
         <div class="auth-box">
             <div class="auth-header">
-                <h1>💳 Credit Card Qualifier Pro</h1>
+                <h1><i class="fas fa-credit-card"></i> Credit Card Qualifier Pro</h1>
                 <p>Advanced credit card matching with real approval odds</p>
             </div>
             <div class="auth-tabs">
@@ -63,12 +64,12 @@
     </div>
     <div id="appScreen" class="screen hidden">
         <header class="app-header">
-            <div><h2 style="color: #667eea;">💳 CardQualifier Pro</h2></div>
+            <div><h2 style="color: #667eea;"><i class="fas fa-credit-card"></i> CardQualifier Pro</h2></div>
             <nav class="app-nav">
-                <button class="nav-btn active" onclick="showPage('dashboard')">🏠 Dashboard</button>
-                <button class="nav-btn" onclick="showPage('cards')">🔍 Find Cards</button>
-                <button class="nav-btn" onclick="showPage('applications')">📋 Applications</button>
-                <button class="nav-btn" onclick="showPage('profile')">👤 Profile</button>
+                <button class="nav-btn active" onclick="showPage('dashboard')"><i class="fas fa-home"></i> Dashboard</button>
+                <button class="nav-btn" onclick="showPage('cards')"><i class="fas fa-search"></i> Find Cards</button>
+                <button class="nav-btn" onclick="showPage('applications')"><i class="fas fa-list"></i> Applications</button>
+                <button class="nav-btn" onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</button>
             </nav>
             <div class="user-menu">
                 <span id="userName">User</span>
@@ -81,31 +82,31 @@
                 <p>Your personalized credit card recommendations</p>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">📊</div>
+                        <div class="stat-icon"><i class="fas fa-chart-bar"></i></div>
                         <div class="stat-value" id="statScore">720</div>
                         <div class="stat-label">Credit Score</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">💰</div>
+                        <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
                         <div class="stat-value" id="statIncome">$50,000</div>
                         <div class="stat-label">Annual Income</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📋</div>
+                        <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
                         <div class="stat-value" id="statApps">0</div>
                         <div class="stat-label">Applications</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">🎯</div>
+                        <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
                         <div class="stat-value" id="statOdds">85%</div>
                         <div class="stat-label">Avg Approval</div>
                     </div>
                 </div>
-                <h3>✨ Top Recommendations</h3>
+                <h3><i class="fas fa-star"></i> Top Recommendations</h3>
                 <div id="dashboardCards" class="cards-grid"></div>
             </div>
             <div id="cardsPage" class="page">
-                <h2>🔍 Find Your Perfect Card</h2>
+                <h2><i class="fas fa-search"></i> Find Your Perfect Card</h2>
                 <p>Filter cards and see your approval odds</p>
                 <div class="form-group" style="margin-bottom: 20px; max-width: 500px;">
                     <label style="color: white;">Search Cards</label>
@@ -140,11 +141,11 @@
                 <div id="cardsResults" class="cards-grid"></div>
             </div>
             <div id="applicationsPage" class="page">
-                <h2>📋 My Applications</h2>
+                <h2><i class="fas fa-list"></i> My Applications</h2>
                 <p>Track your credit card applications</p>
                 <div id="applicationsList">
                     <div style="text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 48px; margin-bottom: 20px;">📄</div>
+                        <div style="font-size: 48px; margin-bottom: 20px;"><i class="fas fa-file"></i></div>
                         <h3>No Applications Yet</h3>
                         <p>You haven't applied for any cards yet.</p>
                         <button class="btn" onclick="showPage('cards')">Find Cards to Apply</button>
@@ -152,12 +153,12 @@
                 </div>
             </div>
             <div id="profilePage" class="page">
-                <h2>👤 My Profile</h2>
+                <h2><i class="fas fa-user"></i> My Profile</h2>
                 <p>Manage your financial information</p>
                 <div class="profile-grid">
                     <div class="profile-card">
                         <div style="text-align:center; margin-bottom:30px;">
-                            <div style="font-size:60px; color:#667eea;">👤</div>
+                            <div style="font-size:60px; color:#667eea;"><i class="fas fa-user-circle"></i></div>
                             <h3 id="profileName">User</h3>
                             <p id="profileEmail">email@example.com</p>
                         </div>
@@ -178,7 +179,7 @@
                         </div>
                     </div>
                     <div class="profile-card">
-                        <h3>💰 Rewards Calculator</h3>
+                        <h3><i class="fas fa-calculator"></i> Rewards Calculator</h3>
                         <p style="color:#666; margin-bottom:20px;">Select a card and estimate your yearly rewards</p>
                         <div class="form-group">
                             <label>Select Card</label>
