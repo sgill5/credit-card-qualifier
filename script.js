@@ -245,6 +245,11 @@ function reapplyFromList(cardId) {
     loadApplications();
 }
 
+function updateSliderGradient(slider) {
+    const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+    slider.style.background = `linear-gradient(to right, #667eea 0%, #667eea ${value}%, #ddd ${value}%, #ddd 100%)`;
+}
+
 window.addEventListener('load', () => {
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
@@ -257,8 +262,14 @@ window.addEventListener('load', () => {
         }
     }
     
+    const sliderElement = document.getElementById('maxFee');
+    if (sliderElement) {
+        updateSliderGradient(sliderElement);
+    }
+    
     window.showPage = showPage;
     window.updateProfile = updateProfile;
     window.cancelApplicationFromList = cancelApplicationFromList;
     window.reapplyFromList = reapplyFromList;
+    window.updateSliderGradient = updateSliderGradient;
 });
