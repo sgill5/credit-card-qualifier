@@ -5,10 +5,6 @@ class SimpleDB {
         this.sessions = JSON.parse(localStorage.getItem('cc_sessions')) || [];
         this.cardViews = JSON.parse(localStorage.getItem('cc_cardviews')) || [];
         
-        if (this.users.length === 0) {
-            this.createDemoUser();
-        }
-        
         this.creditCards = [
             {
                 id: 1,
@@ -40,7 +36,7 @@ class SimpleDB {
                 issuer: "Chase",
                 type: "cashback",
                 annualFee: 0,
-                welcomeBonus: "$200 cash back",
+                welcomeBonus: "$300 cash back",
                 rewards: "1.5% on all purchases",
                 apr: "20.49%-29.24%",
                 creditRequired: 660,
@@ -553,28 +549,32 @@ class SimpleDB {
         ];
     }
     
-    createDemoUser() {
-        const demoUser = {
-            id: 1,
-            email: "demo@example.com",
-            password: "demo123_hashed",
-            firstName: "Demo",
-            lastName: "User",
-            annualIncome: 75000,
-            creditScore: 720,
-            createdAt: new Date().toISOString()
-        };
-        this.users.push(demoUser);
-        this.save();
+    async hashPassword(password) {
+        const salt = this.generateSalt();
+        const hashed = this.simpleHash(password + salt);
+        return `${salt}$${hashed}`;
     }
     
-    async hashPassword(password) {
-        return password.split('').reverse().join('') + '_hashed';
+    generateSalt() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+    
+    simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash).toString(36);
     }
     
     async verifyPassword(input, stored) {
-        const hashedInput = input.split('').reverse().join('') + '_hashed';
-        return hashedInput === stored;
+        const parts = stored.split('$');
+        const salt = parts[0];
+        const storedHash = parts[1];
+        const inputHash = this.simpleHash(input + salt);
+        return inputHash === storedHash;
     }
     
     findUser(email) {
