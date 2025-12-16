@@ -126,7 +126,7 @@ function displayCards(cards, containerId) {
     }).join('');
 }
 
-function loadDashboardCards() {
+async function loadDashboardCards() {
     if (!currentUser) return;
     
     const sortedCards = [...db.creditCards]
@@ -151,7 +151,7 @@ function loadDashboardCards() {
     }
 }
 
-function findCards() {
+async function findCards() {
     if (!currentUser) {
         showMessage('Please login first', 'error');
         return;
@@ -238,13 +238,10 @@ async function applyForCard(cardId) {
             showMessage(`❌ Declined for ${card.name}. You can try again in 12 hours!`, 'error');
         }
         
+        await loadApplications();
+        await loadDashboardCards();
+        await findCards();
         updateUserInfo();
-        loadDashboardCards();
-        loadApplications();
-        
-        if (document.getElementById('cardsResults')) {
-            findCards();
-        }
     } catch (error) {
         console.error('Application error:', error);
         showMessage('Application failed: ' + error.message, 'error');
