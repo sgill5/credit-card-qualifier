@@ -22,6 +22,9 @@ function showPage(page) {
     }
 }
 
+// Make functions globally available immediately
+window.showPage = showPage;
+
 function updateUserInfo() {
     if (!currentUser) return;
     
