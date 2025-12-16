@@ -71,7 +71,8 @@ async function handleLogin(event) {
     }
     
     try {
-        const response = await fetch(`${getAPIUrl()}/api/login`, {
+        const apiUrl = getAPIUrl();
+        const response = await fetch(`${apiUrl}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -159,7 +160,8 @@ async function handleSignup(event) {
     }
     
     try {
-        const response = await fetch(`${getAPIUrl()}/api/signup`, {
+        const apiUrl = getAPIUrl();
+        const response = await fetch(`${apiUrl}/api/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -225,7 +227,8 @@ async function updateProfile(event) {
     }
     
     try {
-        const response = await fetch(`${getAPIUrl()}/api/profile/update`, {
+        const apiUrl = getAPIUrl();
+        const response = await fetch(`${apiUrl}/api/profile/update`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
