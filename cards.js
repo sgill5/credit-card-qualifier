@@ -1,3 +1,5 @@
+const API_URL = typeof process !== 'undefined' && process.env ? (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001') : '';
+
 function calculateApprovalOdds(card) {
     if (!currentUser) return 50;
     
@@ -126,12 +128,8 @@ function displayCards(cards, containerId) {
     }).join('');
 }
 
-async function loadDashboardCards() {
+function loadDashboardCards() {
     if (!currentUser) return;
-    if (!db || !db.creditCards) {
-        console.error('db or creditCards not available');
-        return;
-    }
     
     const sortedCards = [...db.creditCards]
         .map(card => ({...card, odds: calculateApprovalOdds(card)}))
@@ -141,14 +139,21 @@ async function loadDashboardCards() {
     displayCards(sortedCards, 'dashboardCards');
     
     if (currentUser) {
-        if (sortedCards.length > 0) {
-            const avg = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
-            document.getElementById('statOdds').textContent = avg + '%';
+        const userApplications = db.getUserApplications(currentUser.id);
+        if (userApplications.length > 0) {
+            const approvedCount = userApplications.filter(app => app.status === 'approved').length;
+            const approvalRate = Math.round((approvedCount / userApplications.length) * 100);
+            document.getElementById('statOdds').textContent = approvalRate + '%';
+        } else {
+            if (sortedCards.length > 0) {
+                const avg = Math.round(sortedCards.reduce((sum, card) => sum + card.odds, 0) / sortedCards.length);
+                document.getElementById('statOdds').textContent = avg + '%';
+            }
         }
     }
 }
 
-async function findCards() {
+function findCards() {
     if (!currentUser) {
         showMessage('Please login first', 'error');
         return;
@@ -211,7 +216,7 @@ async function applyForCard(cardId) {
     }
     
     try {
-        const response = await fetch(`/api/apply`, {
+        const response = await fetch(`${API_URL}/api/apply`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -235,10 +240,13 @@ async function applyForCard(cardId) {
             showMessage(`❌ Declined for ${card.name}. You can try again in 12 hours!`, 'error');
         }
         
-        await loadApplications();
-        await loadDashboardCards();
-        await findCards();
         updateUserInfo();
+        loadDashboardCards();
+        loadApplications();
+        
+        if (document.getElementById('cardsResults')) {
+            findCards();
+        }
     } catch (error) {
         console.error('Application error:', error);
         showMessage('Application failed: ' + error.message, 'error');
