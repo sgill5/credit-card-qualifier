@@ -45,12 +45,19 @@ function displayCards(cards, containerId) {
         
         const latestApplication = userApplications.find(app => app.cardId === card.id);
         const userCreditScore = currentUser ? currentUser.creditScore : 0;
+        const userIncome = currentUser ? currentUser.annualIncome : 0;
+        
         const creditScoreTooLow = userCreditScore > 0 && userCreditScore < card.creditRequired;
+        const incomeTooLow = userIncome > 0 && userIncome < card.incomeRequired;
         
         let buttonHTML = '';
         
-        if (creditScoreTooLow) {
+        if (creditScoreTooLow && incomeTooLow) {
+            buttonHTML = `<button class="btn" style="padding: 8px 15px; background: #999; cursor: not-allowed; opacity: 0.5;" disabled>❌ Income & Credit Score Too Low</button>`;
+        } else if (creditScoreTooLow) {
             buttonHTML = `<button class="btn" style="padding: 8px 15px; background: #999; cursor: not-allowed; opacity: 0.5;" disabled>❌ Credit Score Too Low (${card.creditRequired}+ required)</button>`;
+        } else if (incomeTooLow) {
+            buttonHTML = `<button class="btn" style="padding: 8px 15px; background: #999; cursor: not-allowed; opacity: 0.5;" disabled>❌ Income Too Low ($${card.incomeRequired.toLocaleString()}+ required)</button>`;
         } else if (!latestApplication) {
             buttonHTML = `<button class="btn" style="padding: 8px 15px;" onclick="applyForCard(${card.id})">Apply Now</button>`;
         } else if (latestApplication.status === 'approved') {
