@@ -333,4 +333,6 @@ window.addEventListener('load', () => {
     window.cancelApplicationFromList = cancelApplicationFromList;
     window.reapplyFromList = reapplyFromList;
     window.updateSliderGradient = updateSliderGradient;
+    window.showApp = showApp;
+    window.showAuth = showAuth;
 });
