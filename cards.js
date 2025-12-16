@@ -1,5 +1,3 @@
-const API_URL = typeof process !== 'undefined' && process.env ? (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001') : '';
-
 function calculateApprovalOdds(card) {
     if (!currentUser) return 50;
     
@@ -199,7 +197,7 @@ function resetFilters() {
     document.getElementById('resultsCount').textContent = '0';
 }
 
-async function applyForCard(cardId) {
+function applyForCard(cardId) {
     if (!currentUser) {
         showMessage('Please login first', 'error');
         return;
@@ -208,48 +206,41 @@ async function applyForCard(cardId) {
     const card = db.creditCards.find(c => c.id === cardId);
     if (!card) return;
     
-    const odds = calculateApprovalOdds(card);
-    let status = 'declined';
-    
-    if (currentUser.creditScore >= card.creditRequired && currentUser.annualIncome >= card.incomeRequired) {
-        status = Math.random() * 100 < odds ? 'approved' : 'declined';
+    const canReapply = db.canReapply(currentUser.id, card.id);
+    if (!canReapply) {
+        const waitHours = db.getReapplyWaitTime(currentUser.id, card.id);
+        showMessage(`Please wait ${waitHours} more hours before reapplying`, 'error');
+        return;
     }
     
-    try {
-        const response = await fetch(`${API_URL}/api/apply`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: currentUser.id,
-                cardId: cardId,
-                approvalOdds: odds,
-                status: status
-            })
+    const userApplications = db.getUserApplications(currentUser.id);
+    const allPreviousApplications = userApplications.filter(app => app.cardId === cardId);
+    
+    if (allPreviousApplications.length > 0) {
+        allPreviousApplications.forEach(oldApp => {
+            const index = db.applications.indexOf(oldApp);
+            if (index > -1) {
+                db.applications.splice(index, 1);
+            }
         });
-        
-        const data = await response.json();
-        
-        if (!response.ok) {
-            showMessage('Application failed', 'error');
-            return;
-        }
-        
-        if (status === 'approved') {
-            showMessage(`✅ Approved! You got ${card.name}!`, 'success');
-        } else {
-            showMessage(`❌ Declined for ${card.name}. You can try again in 12 hours!`, 'error');
-        }
-        
-        updateUserInfo();
-        loadDashboardCards();
-        loadApplications();
-        
-        if (document.getElementById('cardsResults')) {
-            findCards();
-        }
-    } catch (error) {
-        console.error('Application error:', error);
-        showMessage('Application failed: ' + error.message, 'error');
+        db.save();
+    }
+    
+    const odds = calculateApprovalOdds(card);
+    const application = db.createApplication(currentUser.id, cardId, odds);
+    
+    if (application.status === 'approved') {
+        showMessage(`✅ Approved! You got ${card.name}!`, 'success');
+    } else {
+        showMessage(`❌ Declined for ${card.name}. You can try again in 12 hours!`, 'error');
+    }
+    
+    updateUserInfo();
+    loadDashboardCards();
+    loadApplications();
+    
+    if (document.getElementById('cardsResults')) {
+        findCards();
     }
 }
 
