@@ -1,22 +1,23 @@
 function calculateApprovalOdds(card) {
     if (!currentUser) return 50;
     
+    const creditDifference = currentUser.creditScore - card.creditRequired;
+    const incomeRatio = currentUser.annualIncome / card.incomeRequired;
+    
+    if (creditDifference < 0 || incomeRatio < 1) {
+        return 0;
+    }
+    
     let score = 50;
     
-    const creditDifference = currentUser.creditScore - card.creditRequired;
     if (creditDifference >= 100) score += 30;
     else if (creditDifference >= 50) score += 20;
     else if (creditDifference >= 0) score += 15;
-    else if (creditDifference >= -50) score += 5;
-    else score -= 20;
     
-    const incomeRatio = currentUser.annualIncome / card.incomeRequired;
     if (incomeRatio >= 2) score += 30;
     else if (incomeRatio >= 1.5) score += 20;
     else if (incomeRatio >= 1.2) score += 15;
     else if (incomeRatio >= 1) score += 10;
-    else if (incomeRatio >= 0.8) score += 5;
-    else score -= 10;
     
     if (card.annualFee === 0) score += 10;
     if (currentUser.creditScore >= 800) score += 5;
