@@ -1,7 +1,3 @@
-function getAPIUrl() {
-    return window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
-}
-
 function calculateApprovalOdds(card) {
     if (!currentUser) return 50;
     
@@ -218,7 +214,7 @@ async function applyForCard(cardId) {
     }
     
     try {
-        const response = await fetch(`${getAPIUrl()}/api/apply`, {
+        const response = await fetch(`/api/apply`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
