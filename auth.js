@@ -1,9 +1,5 @@
 let currentUser = null;
 
-function getAPIUrl() {
-    return window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
-}
-
 function switchTab(tab) {
     const allTabs = document.querySelectorAll('.auth-tab');
     allTabs.forEach(t => t.classList.remove('active'));
@@ -71,8 +67,8 @@ async function handleLogin(event) {
     }
     
     try {
-        const apiUrl = getAPIUrl();
-        const response = await fetch(`${apiUrl}/api/login`, {
+        
+        const response = await fetch(`/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -160,8 +156,8 @@ async function handleSignup(event) {
     }
     
     try {
-        const apiUrl = getAPIUrl();
-        const response = await fetch(`${apiUrl}/api/signup`, {
+        
+        const response = await fetch(`/api/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -227,8 +223,8 @@ async function updateProfile(event) {
     }
     
     try {
-        const apiUrl = getAPIUrl();
-        const response = await fetch(`${apiUrl}/api/profile/update`, {
+        
+        const response = await fetch(`/api/profile/update`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
